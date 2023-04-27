@@ -8,13 +8,14 @@ type IFilter = {
 
 type Props = {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setQueryReset: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SearchForm = ({ setSearch }: Props) => {
+const SearchForm = ({ setSearch, setQueryReset }: Props) => {
   const { register, handleSubmit } = useForm<IFilter>({});
 
   const submitHandler = (data: IFilter) => {
-    setSearch(data.query);
+    data.query ? setSearch(data.query) : setQueryReset(true);
   };
 
   return (

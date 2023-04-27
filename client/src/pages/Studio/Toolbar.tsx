@@ -31,7 +31,7 @@ const Toolbar = ({ stageRef }: Props) => {
           ))}
         </TabList>
 
-        <TabPanels minW="350px" maxW="350px" bgColor="gray.300">
+        <TabPanels minW="350px" maxW="350px" bgColor="gray.300" overflowY="auto">
           <TabPanel>
             <Resize />
           </TabPanel>

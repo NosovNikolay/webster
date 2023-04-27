@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Loader from '~/components/Loader/Loader';
 
 type Props = {
   count: number;
@@ -14,7 +15,7 @@ const InfiniteWrapper = ({ count, fetchItems, children }: Props) => {
       dataLength={count}
       next={fetchItems}
       hasMore={true}
-      loader={<h4>Loading...</h4>}
+      loader={<Loader />}
     >
       {children}
     </InfiniteScroll>
