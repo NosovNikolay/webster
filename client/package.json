@@ -24,7 +24,8 @@
     "react-konva": "^18.2.7",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "unsplash-js": "^7.0.15"
   },
   "devDependencies": {
     "@types/node": "^18.16.0",
