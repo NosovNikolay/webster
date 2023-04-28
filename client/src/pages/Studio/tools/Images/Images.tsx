@@ -87,7 +87,7 @@ const Images = () => {
           <InfiniteWrapper fetchItems={fetchImages} count={images?.length || 10}>
             <SimpleGrid spacingY={4}>
               {images?.map((img, i) => (
-                <Image key={i} src={img.urls.regular} onClick={() => addImageToStage(img)} />
+                <Image key={i} src={img.urls.regular} rounded="md" onClick={() => addImageToStage(img)} />
               ))}
             </SimpleGrid>
           </InfiniteWrapper>
