@@ -1,11 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  StageObject,
-  StageObjectData,
-  stageObjectSelector,
-  stateObjectActions,
-} from '~/store/slices/stage-object-slice';
+import { stageObjectSelector, stateObjectActions } from '~/store/slices/stage-object-slice';
+import { StageObject, StageObjectData } from '~/types/stage-object';
 
 const useStageObject = () => {
   const dispatch = useDispatch();
@@ -21,7 +17,7 @@ const useStageObject = () => {
   };
 
   const resetAll = () => {
-    dispatch(stateObjectActions.removeAll({}));
+    dispatch(stateObjectActions.removeAll());
   };
 
   return {

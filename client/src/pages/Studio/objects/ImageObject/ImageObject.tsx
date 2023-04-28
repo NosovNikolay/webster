@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Image as KonvaImage } from 'react-konva';
 import useImage from 'use-image';
 import { MAX_IMAGE_HEIGHT, MAX_IMAGE_WIDTH } from '~/consts/images';
-import { StageObjectData } from '~/store/slices/stage-object-slice';
+import { StageObjectData } from '~/types/stage-object';
 
 type Props = {
   src: string;

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Konva from 'konva';
 import { Stage, Layer } from 'react-konva';
 import { useAppSelector } from '~/hooks/use-app-selector';
-import { StageObject, StageObjectType } from '~/store/slices/stage-object-slice';
 import ImageObject from './objects/ImageObject/ImageObject';
 import useStageObject from '~/hooks/use-stage-object';
+import { StageObject, StageObjectType } from '~/types/stage-object';
 
 type IProps = {
   stageRef: React.RefObject<Konva.Stage> | null;

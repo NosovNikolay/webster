@@ -1,4 +1,4 @@
-import { StageObjectData, StageObjectType } from '~/store/slices/stage-object-slice';
+import { StageObjectData, StageObjectType } from '~/types/stage-object';
 
 export const DEFAULT_STAGE_OBJECT = {
   width: 100,
