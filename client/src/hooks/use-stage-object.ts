@@ -15,6 +15,10 @@ const useStageObject = () => {
 
   const updateOne = (obj: StageObjectPartial) => {
     const { id, data } = obj;
+    if (!id || !data) {
+      return;
+    }
+
     const target = stageObjects.find((s) => s.id === id);
     if (!target) {
       console.error(`A target with the id ${id} does not exist.`);

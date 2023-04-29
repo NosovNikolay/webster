@@ -10,10 +10,6 @@ const useTransformer = () => {
     const id = e.target.attrs.id;
     const data = e.target.attrs;
 
-    if (!id) {
-      return;
-    }
-
     updateOne({ id, data });
     transformer.current?.getStage()?.batchDraw();
   };
