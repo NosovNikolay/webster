@@ -54,6 +54,7 @@ const Frame = ({ stageRef }: IProps) => {
       scaleX={scale}
       scaleY={scale}
       ref={stageRef}
+      onClick={onObjectSelect}
     >
       <Layer>
         {stageObjects.map((obj) => (
