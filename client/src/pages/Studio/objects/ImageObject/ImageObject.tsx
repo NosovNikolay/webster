@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Image as KonvaImage } from 'react-konva';
 import useImage from 'use-image';
 import { MAX_IMAGE_HEIGHT, MAX_IMAGE_WIDTH } from '~/consts/images';
+import useDragHandlers from '~/hooks/use-drag-handlers';
 import { StageImageData, StageObject } from '~/types/stage-object';
 
 type Props = {
@@ -16,6 +17,8 @@ const ImageObject = ({ obj, onSelect }: Props) => {
   const [image, load] = useImage(src, 'anonymous');
   const [size, setSize] = useState({ width: MAX_IMAGE_WIDTH, height: MAX_IMAGE_HEIGHT });
 
+  const { onDragEnd } = useDragHandlers();
+
   useEffect(() => {
     if (image && load === 'loaded') {
       const { width, height } = image;
@@ -25,7 +28,9 @@ const ImageObject = ({ obj, onSelect }: Props) => {
     }
   }, [image]);
 
-  return <KonvaImage id={id} onClick={onSelect} image={image} {...props} {...size} />;
+  return (
+    <KonvaImage id={id} onClick={onSelect} image={image} onDragEnd={(e) => onDragEnd(e, obj.id)} {...props} {...size} />
+  );
 };
 
 export default ImageObject;

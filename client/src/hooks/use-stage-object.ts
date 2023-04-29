@@ -1,7 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { stageObjectSelector, stateObjectActions } from '~/store/slices/stage-object-slice';
-import { StageObject, StageObjectData } from '~/types/stage-object';
+import { StageObject, StageObjectData, StageObjectPartial } from '~/types/stage-object';
 import { useAppSelector } from './use-app-selector';
 
 const useStageObject = () => {
@@ -13,7 +13,7 @@ const useStageObject = () => {
     dispatch(stateObjectActions.addOne(payload));
   };
 
-  const updateOne = (obj: StageObject) => {
+  const updateOne = (obj: StageObjectPartial) => {
     const { id, data } = obj;
     const target = stageObjects.find((s) => s.id === id);
     if (!target) {

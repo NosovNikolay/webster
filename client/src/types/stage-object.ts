@@ -21,3 +21,8 @@ export type StageObject = {
 export type StageImageData = {
   src: string;
 } & StageObjectData;
+
+export type StageObjectPartial = {
+  id: string;
+  data: Partial<StageObjectData>;
+};
