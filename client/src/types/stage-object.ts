@@ -14,6 +14,10 @@ export type StageObjectData = {
 } & Record<string, any>;
 
 export type StageObject = {
-  id: number | string;
+  id: string;
   data: StageObjectData;
 } & Record<string, any>;
+
+export type StageImageData = {
+  src: string;
+} & StageObjectData;

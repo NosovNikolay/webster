@@ -1,20 +1,23 @@
+import Konva from 'konva';
 import { useEffect, useState } from 'react';
 import { Image as KonvaImage } from 'react-konva';
 import useImage from 'use-image';
 import { MAX_IMAGE_HEIGHT, MAX_IMAGE_WIDTH } from '~/consts/images';
-import { StageObjectData } from '~/types/stage-object';
+import { StageImageData, StageObject } from '~/types/stage-object';
 
 type Props = {
-  src: string;
-  data: StageObjectData;
+  obj: StageObject;
+  onSelect: (e: Konva.KonvaEventObject<MouseEvent>) => void;
 };
 
-const ImageObject = ({ src, data }: Props) => {
-  const [image] = useImage(src);
+const ImageObject = ({ obj, onSelect }: Props) => {
+  const { id, data } = obj;
+  const { src, ...props } = data as StageImageData;
+  const [image, load] = useImage(src, 'anonymous');
   const [size, setSize] = useState({ width: MAX_IMAGE_WIDTH, height: MAX_IMAGE_HEIGHT });
 
   useEffect(() => {
-    if (image) {
+    if (image && load === 'loaded') {
       const { width, height } = image;
       const ratio = Math.min(MAX_IMAGE_WIDTH / width, MAX_IMAGE_HEIGHT / height);
 
@@ -22,7 +25,7 @@ const ImageObject = ({ src, data }: Props) => {
     }
   }, [image]);
 
-  return <KonvaImage image={image} {...data} {...size} />;
+  return <KonvaImage id={id} onClick={onSelect} image={image} {...props} {...size} />;
 };
 
 export default ImageObject;
