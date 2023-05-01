@@ -22,14 +22,13 @@ const ResizableText = ({ shapeProps, onDoubleClick, transformer, onTransformerEn
   const textRef = useRef<Konva.Text | null>(null);
   const { onObjectSelect, setSelected, isSelected } = useObjectSelect({ transformer });
   const selected = isSelected(id);
+  const onSelect = () => setSelected(id);
 
   useEffect(() => {
     if (selected) {
       onObjectSelect(textRef.current as Konva.Text);
     }
   }, [selected]);
-
-  const onSelect = () => setSelected(id);
 
   const handleResize = () => {
     if (textRef.current !== null) {
