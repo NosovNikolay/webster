@@ -8,6 +8,10 @@ export const DEFAULT_STAGE_OBJECT = {
   draggable: true,
   z_index: 0,
   updatedAt: Date.now(),
+  offsetX: 0,
+  offsetY: 0,
+  scaleX: 1,
+  scaleY: 1,
 };
 
 export const DEFAULT_IMAGE_OBJECT: StageObjectData = {

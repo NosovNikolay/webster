@@ -12,6 +12,10 @@ export type StageObjectData = {
   height: number;
   x: number;
   y: number;
+  offsetX: number;
+  offsetY: number;
+  scaleX: number;
+  scaleY: number;
   draggable: boolean;
   z_index: number;
   updatedAt: number;
