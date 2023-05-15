@@ -1,4 +1,4 @@
-import { StageObjectData, StageObjectType } from '~/types/stage-object';
+import { FilterName, StageObjectData, StageObjectType } from '~/types/stage-object';
 
 export const DEFAULT_STAGE_OBJECT = {
   width: 100,
@@ -17,6 +17,8 @@ export const DEFAULT_STAGE_OBJECT = {
 export const DEFAULT_IMAGE_OBJECT: StageObjectData = {
   ...DEFAULT_STAGE_OBJECT,
   type: StageObjectType.IMAGE,
+  filters: [FilterName.brighten],
+  filterValues: {},
 };
 
 export const DEFAULT_TEXT_OBJECT: StageObjectData = {

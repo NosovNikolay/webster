@@ -1,33 +1,23 @@
-import { Button, HStack } from '@chakra-ui/react';
-import useStageObject from '~/hooks/use-stage-object';
-import { StageObject } from '~/types/stage-object';
+import { HStack } from '@chakra-ui/react';
+import { StageImageData, StageObject } from '~/types/stage-object';
+import ImageFlip from './Flip';
+import ImageFilters from './Filters';
 
 type Props = {
   selectedObject: StageObject;
 };
 
 const ImageEditing = ({ selectedObject }: Props) => {
-  const { id, data } = selectedObject;
-  const { updateOne } = useStageObject();
-
-  const flipVertically = () => {
-    const offsetY = data.height / 2;
-    const scaleY = -1 * data.scaleY;
-    updateOne({ id, data: { offsetY, scaleY } });
-  };
-
-  const flipHorizontally = () => {
-    const offsetX = data.width / 2;
-    const scaleX = -1 * data.scaleX;
-    updateOne({ id, data: { offsetX, scaleX } });
-  };
-
   return (
     <HStack spacing={4} sx={{ px: 4 }}>
-      <Button onClick={() => flipVertically()}>Flip vertically</Button>
-      <Button onClick={() => flipHorizontally()}>Flip horizontally</Button>
+      <ImageFlip selectedObject={selectedObject} />
+      <ImageFilters imageId={selectedObject.id} data={selectedObject.data as StageImageData} />
     </HStack>
   );
 };
 
 export default ImageEditing;
+
+// filters
+// shapes
+// crop
