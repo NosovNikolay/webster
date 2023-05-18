@@ -15,7 +15,7 @@ type Props = {
 
 const ImageObject = ({ obj, onSelect }: Props) => {
   const { id, data } = obj;
-  const { src, filters: filterNames, filterValues, ...props } = data as StageImageData;
+  const { src, filterNames, filterValues, ...props } = data as StageImageData;
   const [image, load] = useImage(src, id);
   const [size, setSize] = useState({ width: MAX_IMAGE_WIDTH, height: MAX_IMAGE_HEIGHT });
   const imgRef = useRef() as RefObject<Image>;
@@ -24,6 +24,8 @@ const ImageObject = ({ obj, onSelect }: Props) => {
     () => (filterNames[0] ? filterNames.map((f) => Konva.Filters[f]).filter((f) => f) : [Konva.Filters.Brighten]),
     [filterNames],
   );
+
+  const cacheOptions = { imageSmoothingEnabled: true, width: size.width, height: size.height };
 
   const { onDragEnd } = useDragHandlers();
   const { updateOne } = useStageObject();
@@ -35,21 +37,17 @@ const ImageObject = ({ obj, onSelect }: Props) => {
 
       const newSize = { width: width * ratio, height: height * ratio };
       setSize(newSize);
-      updateOne({ id, data: { ...newSize } });
+      updateOne({ id, data: newSize });
     }
-    imgRef.current?.cache();
   }, [image]);
 
   useEffect(() => {
     if (imgRef.current && filterValues.brighten) {
       imgRef.current.brightness(filterValues.brighten);
     }
-    imgRef.current?.cache();
-  }, [filterValues, image]);
-
-  useEffect(() => {
-    imgRef.current!.cache();
-  }, []);
+    imgRef.current?.filters(filters);
+    imgRef.current?.cache(cacheOptions);
+  }, [image, data, filterValues, filterNames]);
 
   return (
     <KonvaImage
@@ -57,8 +55,7 @@ const ImageObject = ({ obj, onSelect }: Props) => {
       ref={imgRef}
       onClick={onSelect}
       image={image}
-      filters={filters}
-      onDragEnd={(e) => onDragEnd(e, obj.id)}
+      onDragEnd={(e) => onDragEnd(e, obj)}
       {...props}
       {...filterValues}
       {...size}

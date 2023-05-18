@@ -35,9 +35,9 @@ const BOOLEAN_FILTERS: FilterValue[] = [
 ];
 
 const ImageFilters = ({ imageId, data }: Props) => {
-  const { filterValues } = data;
+  const { filterValues, filterNames } = data;
   const { updateOne } = useStageObject();
-  const [filters, setFilters] = useState<FilterName[]>(data.filters);
+  const [filters, setFilters] = useState<FilterName[]>(filterNames);
   const [filterMap, setFilterMap] = useState<StageImageFilterValues>(filterValues);
 
   const getFilterByName = (name: FilterName | string) => {
@@ -66,7 +66,7 @@ const ImageFilters = ({ imageId, data }: Props) => {
     updateOne({
       id: imageId,
       data: {
-        filters,
+        filterNames: filters,
         filterValues: filterMap,
       },
     });

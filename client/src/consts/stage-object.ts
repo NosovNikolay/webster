@@ -17,7 +17,7 @@ export const DEFAULT_STAGE_OBJECT = {
 export const DEFAULT_IMAGE_OBJECT: StageObjectData = {
   ...DEFAULT_STAGE_OBJECT,
   type: StageObjectType.IMAGE,
-  filters: [FilterName.brighten],
+  filterNames: [FilterName.brighten],
   filterValues: {},
 };
 

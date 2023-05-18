@@ -36,7 +36,7 @@ export type StageImageFilterValues = {
 
 export type StageImageData = {
   src: string;
-  filters: FilterName[];
+  filterNames: FilterName[];
   filterValues: StageImageFilterValues;
 } & StageObjectData;
 
