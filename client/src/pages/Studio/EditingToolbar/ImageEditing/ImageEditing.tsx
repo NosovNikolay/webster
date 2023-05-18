@@ -17,7 +17,3 @@ const ImageEditing = ({ selectedObject }: Props) => {
 };
 
 export default ImageEditing;
-
-// filters
-// shapes
-// crop
