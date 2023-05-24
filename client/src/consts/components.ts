@@ -1,4 +1,5 @@
 import {
+  HiAdjustments,
   HiOutlineArrowsExpand,
   HiOutlineCloudUpload,
   HiOutlineCube,
@@ -14,6 +15,7 @@ export const TOOLBAR_TABS = [
   { icon: HiOutlineCloudUpload, title: 'Upload' },
   { icon: HiOutlineTranslate, title: 'Text' },
   { icon: HiOutlineCube, title: 'Shapes' },
+  { icon: HiAdjustments, title: 'Hotkeys' },
 ];
 
 export const NAVBAR_HEIGHT = 56;
