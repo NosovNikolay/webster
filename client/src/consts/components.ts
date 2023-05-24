@@ -1,9 +1,9 @@
 import {
-  HiAdjustments,
   HiOutlineArrowsExpand,
   HiOutlineCloudUpload,
   HiOutlineCube,
   HiOutlineDownload,
+  HiOutlineInformationCircle,
   HiOutlinePhotograph,
   HiOutlineTranslate,
 } from 'react-icons/hi';
@@ -15,7 +15,7 @@ export const TOOLBAR_TABS = [
   { icon: HiOutlineCloudUpload, title: 'Upload' },
   { icon: HiOutlineTranslate, title: 'Text' },
   { icon: HiOutlineCube, title: 'Shapes' },
-  { icon: HiAdjustments, title: 'Hotkeys' },
+  { icon: HiOutlineInformationCircle, title: 'Hotkeys' },
 ];
 
 export const NAVBAR_HEIGHT = 56;
