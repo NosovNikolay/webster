@@ -12,12 +12,12 @@ import { useDispatch } from 'react-redux';
 import { setStage } from './store/slices/frame-slice';
 
 function App() {
-  const { isLoggedIn } = useAppSelector((state) => state.auth);
+  const { isLoggedIn, stage } = useAppSelector((state) => ({ ...state.auth, ...state.frame }));
   const dispatch = useDispatch();
   const [getCanvases, { isLoading }] = useLazyGetCanvasesQuery();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn || stage.id) {
       return;
     }
 
@@ -27,14 +27,14 @@ function App() {
         if (!data.length) {
           return;
         }
-        const { id, name } = data[0];
-        dispatch(setStage({ id, name }));
+        const firstStage = data[0];
+        dispatch(setStage({ ...firstStage }));
       })
       .catch((err) => console.error(err));
   }, [isLoggedIn]);
 
   return isLoading ? (
-    <Loader />
+    <Loader isFullScreen />
   ) : (
     <Routes>
       <Route path="/" element={<Studio />} />

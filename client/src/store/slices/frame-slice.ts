@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export type IStageState = {
   id: string | null;
   name: string | null;
+  description: string | null;
   content?: string | null;
 };
 
@@ -17,6 +18,7 @@ const initialState: IFrameState = {
   stage: {
     id: null,
     name: null,
+    description: null,
     content: null,
   },
   width: 1080,
@@ -31,7 +33,14 @@ const frameSlice = createSlice({
     setStage(state, { payload }) {
       state.stage.id = payload.id;
       state.stage.name = payload.name;
+      state.stage.description = payload.description;
       state.stage.content = payload.content || '""';
+    },
+    resetStage(state) {
+      state.stage.id = null;
+      state.stage.name = null;
+      state.stage.description = null;
+      state.stage.content = null;
     },
     setSize(state, { payload }) {
       state.width = payload.width;
@@ -43,5 +52,5 @@ const frameSlice = createSlice({
   },
 });
 
-export const { setSize, setScale, setStage } = frameSlice.actions;
+export const { setSize, setScale, setStage, resetStage } = frameSlice.actions;
 export default frameSlice.reducer;

@@ -1,30 +1,49 @@
-import { VStack, FormControl, FormLabel, Input, FormErrorMessage, Button } from '@chakra-ui/react';
+import { VStack, FormControl, FormLabel, Input, FormErrorMessage, Button, useToast } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useAppSelector } from '~/hooks/use-app-selector';
 import useRequestHandler from '~/hooks/use-request-handler';
-import { useCreateCanvasMutation } from '~/store/slices/canvas-slice';
+import { useUpdateCanvasMutation } from '~/store/slices/canvas-slice';
 import { ICanvasPayload } from '~/types/canvas';
 import { ICreate, createSchema } from '~/validation/canvas';
 
-const CanvasCreateForm = () => {
-  const [create, { isLoading }] = useCreateCanvasMutation();
+const CanvasUpdateForm = () => {
+  const { stage } = useAppSelector((state) => state.frame);
+  const [update, { isLoading }] = useUpdateCanvasMutation();
+  const toast = useToast();
+
+  const stageValues = {
+    id: stage.id as string,
+    name: stage.name as string,
+    content: stage.content as string,
+    description: stage.description as string,
+  };
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<ICreate>({
+    defaultValues: { ...stageValues },
     resolver: zodResolver(createSchema),
   });
 
-  const { handler: createHandler } = useRequestHandler<ICanvasPayload>({
-    f: create,
+  const { handler: updateHandler } = useRequestHandler<ICanvasPayload & { id: string }>({
+    f: update,
   });
 
   const onSubmit = async (data: ICreate) => {
-    await createHandler({ ...data, content: '""' });
-    reset();
+    await updateHandler({
+      ...stageValues,
+      ...data,
+    });
+
+    toast({
+      title: 'Your stage was successfully updated.',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    });
   };
 
   return (
@@ -48,4 +67,4 @@ const CanvasCreateForm = () => {
   );
 };
 
-export default CanvasCreateForm;
+export default CanvasUpdateForm;

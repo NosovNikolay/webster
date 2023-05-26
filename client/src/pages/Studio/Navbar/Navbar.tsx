@@ -8,16 +8,25 @@ import { logout } from '~/store/slices/auth-slice';
 import CanvasCreate from '../canvas-actions/CanvasCreate';
 import { useEffect } from 'react';
 import CanvasesView from '../canvas-actions/CanvasesView';
+import CanvasUpdate from '../canvas-actions/CanvasUpdate';
+import { useLazyGetCanvasQuery } from '~/store/slices/canvas-slice';
+import { setStage } from '~/store/slices/frame-slice';
 
 function Navbar() {
   const dispatch = useDispatch();
   const { isLoggedIn, stage } = useAppSelector((state) => ({ ...state.auth, ...state.frame }));
   const { id, name } = stage;
+  const [getStage] = useLazyGetCanvasQuery();
 
   useEffect(() => {
-    if (!isLoggedIn && !id) {
+    if (!isLoggedIn || !id) {
       return;
     }
+
+    getStage(id)
+      .unwrap()
+      .then((stage) => dispatch(setStage({ ...stage })))
+      .catch((err) => console.error(err));
   }, [isLoggedIn, id]);
 
   return (
@@ -41,11 +50,13 @@ function Navbar() {
           <>
             <Box>
               <Text display="inline" fontSize="15px" fontWeight="500" color="white" pr="2">
-                Current Stage:
+                {id && name ? 'Current Stage:' : 'No stage selected'}
               </Text>
-              <Text display="inline" fontSize="16px" fontWeight="600" color="white">
-                {name}
-              </Text>
+              {id && name && (
+                <Text display="inline" fontSize="16px" fontWeight="600" color="white">
+                  {name}
+                </Text>
+              )}
             </Box>
             <Box>
               <Menu>
@@ -55,6 +66,7 @@ function Navbar() {
                 <MenuList>
                   <VStack spacing={4} sx={{ px: 4 }}>
                     <CanvasCreate />
+                    {id && <CanvasUpdate />}
                     <CanvasesView />
                   </VStack>
                 </MenuList>

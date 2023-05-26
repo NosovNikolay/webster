@@ -3,6 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 import type { RootState } from '../store';
 import { ICanvasPayload, ICanvasResponse } from '~/types/canvas';
+import { setStage } from './frame-slice';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_URL,
@@ -49,6 +50,14 @@ export const apiSlice = createApi({
         method: 'PUT',
         body,
       }),
+      async onQueryStarted(_id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setStage({ ...data }));
+        } catch (err) {
+          console.error(err);
+        }
+      },
       invalidatesTags: (_result, _error, arg) => [{ type: 'Canvas', id: arg.id }],
     }),
     deleteCanvas: builder.mutation<ICanvasResponse, string>({
@@ -63,6 +72,7 @@ export const apiSlice = createApi({
 
 export const {
   useGetCanvasesQuery,
+  useLazyGetCanvasQuery,
   useLazyGetCanvasesQuery,
   useGetCanvasQuery,
   useCreateCanvasMutation,
