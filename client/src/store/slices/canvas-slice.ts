@@ -8,7 +8,6 @@ const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_URL,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    console.log(token);
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
@@ -64,6 +63,7 @@ export const apiSlice = createApi({
 
 export const {
   useGetCanvasesQuery,
+  useLazyGetCanvasesQuery,
   useGetCanvasQuery,
   useCreateCanvasMutation,
   useUpdateCanvasMutation,
