@@ -5,7 +5,7 @@ import { useDeleteCanvasMutation } from '~/store/slices/canvas-slice';
 import { IStageState, resetStage, setStage } from '~/store/slices/frame-slice';
 import { ICanvasResponse } from '~/types/canvas';
 
-type Props = ICanvasResponse;
+type Props = ICanvasResponse & { onClose: VoidFunction };
 
 const formatDate = (date: string) =>
   new Intl.DateTimeFormat('en-US', {
@@ -13,12 +13,15 @@ const formatDate = (date: string) =>
     timeStyle: 'short',
   }).format(new Date(date));
 
-const CanvasViewItem = ({ id, name, description, updatedAt }: Props) => {
+const CanvasViewItem = ({ id, name, description, updatedAt, onClose }: Props) => {
   const dispatch = useDispatch();
   const [remove, { isLoading }] = useDeleteCanvasMutation();
   const toast = useToast();
 
-  const changeStage = (stage: IStageState) => dispatch(setStage({ ...stage }));
+  const changeStage = (stage: IStageState) => {
+    dispatch(setStage({ ...stage }));
+    onClose();
+  };
 
   const removeStage = () => {
     remove(id)

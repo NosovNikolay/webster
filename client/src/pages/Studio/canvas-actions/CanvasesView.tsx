@@ -21,7 +21,7 @@ const CanvasesView = () => {
 
   return (
     <Box sx={{ w: '100%' }}>
-      <Button onClick={onOpen} sx={{ w: '100%' }}>
+      <Button variant="ghost" colorScheme="pink" onClick={onOpen} sx={{ w: '100%' }}>
         View all stages
       </Button>
 
@@ -36,7 +36,7 @@ const CanvasesView = () => {
             ) : (
               <VStack spacing={4}>
                 {data && data.length ? (
-                  data.map((s) => <CanvasViewItem key={s.id} {...s} />)
+                  data.map((s) => <CanvasViewItem onClose={onClose} key={s.id} {...s} />)
                 ) : (
                   <NothingFound message="You have no stages. Please create one." />
                 )}

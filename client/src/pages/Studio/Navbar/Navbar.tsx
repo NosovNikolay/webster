@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import CanvasesView from '../canvas-actions/CanvasesView';
 import CanvasUpdate from '../canvas-actions/CanvasUpdate';
 import { useLazyGetCanvasQuery } from '~/store/slices/canvas-slice';
-import { setStage } from '~/store/slices/frame-slice';
+import { resetStage, setStage } from '~/store/slices/frame-slice';
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ function Navbar() {
 
   useEffect(() => {
     if (!isLoggedIn || !id) {
+      dispatch(resetStage());
       return;
     }
 

@@ -15,7 +15,7 @@ const CanvasUpdateForm = () => {
   const stageValues = {
     id: stage.id as string,
     name: stage.name as string,
-    content: stage.content as string,
+    content: JSON.stringify(stage.content),
     description: stage.description as string,
   };
 

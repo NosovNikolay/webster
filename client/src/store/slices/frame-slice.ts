@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { StageObject } from '~/types/stage-object';
 
 export type IStageState = {
   id: string | null;
   name: string | null;
   description: string | null;
-  content?: string | null;
+  content?: string | StageObject[] | null;
 };
 
 export type IFrameState = {
@@ -32,9 +33,9 @@ const frameSlice = createSlice({
   reducers: {
     setStage(state, { payload }) {
       state.stage.id = payload.id;
-      state.stage.name = payload.name;
-      state.stage.description = payload.description;
-      state.stage.content = payload.content || '""';
+      state.stage.name = payload.name || null;
+      state.stage.description = payload.description || null;
+      state.stage.content = payload.content || [];
     },
     resetStage(state) {
       state.stage.id = null;

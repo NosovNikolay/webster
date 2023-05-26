@@ -1,12 +1,17 @@
 import { VStack, FormControl, FormLabel, Input, FormErrorMessage, Button } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import useRequestHandler from '~/hooks/use-request-handler';
+import { useDispatch } from 'react-redux';
 import { useCreateCanvasMutation } from '~/store/slices/canvas-slice';
-import { ICanvasPayload } from '~/types/canvas';
+import { setStage } from '~/store/slices/frame-slice';
 import { ICreate, createSchema } from '~/validation/canvas';
 
-const CanvasCreateForm = () => {
+type Props = {
+  content?: string;
+};
+
+const CanvasCreateForm = ({ content }: Props) => {
+  const dispatch = useDispatch();
   const [create, { isLoading }] = useCreateCanvasMutation();
 
   const {
@@ -18,12 +23,13 @@ const CanvasCreateForm = () => {
     resolver: zodResolver(createSchema),
   });
 
-  const { handler: createHandler } = useRequestHandler<ICanvasPayload>({
-    f: create,
-  });
-
   const onSubmit = async (data: ICreate) => {
-    await createHandler({ ...data, content: '""' });
+    create({ ...data, content: content || '[]' })
+      .unwrap()
+      .then(({ id, name }) => {
+        dispatch(setStage({ id, name }));
+      })
+      .catch((err) => console.error(err));
     reset();
   };
 
