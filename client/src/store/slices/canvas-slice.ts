@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 import type { RootState } from '../store';
-import { ICanvasPayload, ICanvasResponse } from '~/types/canvas';
+import { ICanvas, ICanvasParams, ICanvasPayload, ICanvasResponse } from '~/types/canvas';
 import { setStage } from './frame-slice';
 
 const baseQuery = fetchBaseQuery({
@@ -21,22 +21,23 @@ export const apiSlice = createApi({
   baseQuery,
   tagTypes: ['Canvas'],
   endpoints: (builder) => ({
-    getCanvases: builder.query<ICanvasResponse[], void>({
-      query: () => ({
+    getCanvases: builder.query<ICanvasResponse, ICanvasParams>({
+      query: (params) => ({
         url: `/canvas`,
+        params,
       }),
       providesTags: (result) => {
-        const canvases = result || [];
+        const canvases = result?.canvases || [];
         return ['Canvas', ...canvases.map(({ id }) => ({ type: 'Canvas' as const, id }))];
       },
     }),
-    getCanvas: builder.query<ICanvasResponse, string>({
+    getCanvas: builder.query<ICanvas, string>({
       query: (id: string) => ({
         url: `/canvas/${id}`,
       }),
       providesTags: (result) => [{ type: 'Canvas', id: result?.id }],
     }),
-    createCanvas: builder.mutation<ICanvasResponse, ICanvasPayload>({
+    createCanvas: builder.mutation<ICanvas, ICanvasPayload>({
       query: (body) => ({
         url: `/canvas`,
         method: 'POST',
@@ -44,7 +45,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Canvas'],
     }),
-    updateCanvas: builder.mutation<ICanvasResponse, ICanvasPayload & { id: string }>({
+    updateCanvas: builder.mutation<ICanvas, ICanvasPayload & { id: string }>({
       query: ({ id, ...body }) => ({
         url: `/canvas/${id}`,
         method: 'PUT',
@@ -60,7 +61,7 @@ export const apiSlice = createApi({
       },
       invalidatesTags: (_result, _error, arg) => [{ type: 'Canvas', id: arg.id }],
     }),
-    deleteCanvas: builder.mutation<ICanvasResponse, string>({
+    deleteCanvas: builder.mutation<ICanvas, string>({
       query: (id) => ({
         url: `/canvas/${id}`,
         method: 'DELETE',

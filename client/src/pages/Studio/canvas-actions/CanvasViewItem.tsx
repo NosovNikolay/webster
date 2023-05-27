@@ -3,9 +3,9 @@ import { HiOutlineTrash } from 'react-icons/hi';
 import { useDispatch } from 'react-redux';
 import { useDeleteCanvasMutation } from '~/store/slices/canvas-slice';
 import { IStageState, resetStage, setStage } from '~/store/slices/frame-slice';
-import { ICanvasResponse } from '~/types/canvas';
+import { ICanvas } from '~/types/canvas';
 
-type Props = ICanvasResponse & { onClose: VoidFunction };
+type Props = ICanvas & { onClose: VoidFunction };
 
 const formatDate = (date: string) =>
   new Intl.DateTimeFormat('en-US', {

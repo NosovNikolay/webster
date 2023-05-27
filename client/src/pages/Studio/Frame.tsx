@@ -46,6 +46,7 @@ const Frame = ({ stageRef }: IProps) => {
 
   useEffect(() => {
     const content = stage.content;
+    resetObjectSelect();
     if (JSON.stringify(content) === JSON.stringify(stageObjects)) {
       return;
     }

@@ -21,13 +21,13 @@ function App() {
       return;
     }
 
-    getCanvases()
+    getCanvases({ skip: 0, take: 1 })
       .unwrap()
-      .then((data) => {
-        if (!data.length) {
+      .then(({ canvases, count }) => {
+        if (!count || !canvases.length) {
           return;
         }
-        const firstStage = data[0];
+        const firstStage = canvases[0];
         dispatch(setStage({ ...firstStage }));
       })
       .catch((err) => console.error(err));
